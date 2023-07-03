@@ -1,3 +1,4 @@
+import 'package:climateapp/screens/city_screen.dart';
 import 'package:climateapp/services/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:climateapp/utilities/constants.dart';
@@ -80,7 +81,21 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      var typedName = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const CityScreen();
+                          },
+                        ),
+                      );
+                      if (typedName != null) {
+                        var weatherData =
+                            await weather.getCityWeather(typedName);
+                        updateUI(weatherData);
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors
                           .transparent, // Sets the background color to transparent
